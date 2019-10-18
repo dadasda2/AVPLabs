@@ -4,8 +4,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,11 +11,14 @@ public class Handler extends SimpleChannelInboundHandler<String> {
     private User user;
     private boolean isFirst;
     private static ConcurrentHashMap<ChannelHandlerContext, User> users = new ConcurrentHashMap<>();
+    private MyMaze maze;
 
-    public Handler(ConcurrentHashMap<ChannelHandlerContext, User> u) {
+
+    public Handler() {
         user = new User();
         isFirst = true;
-        users = u;
+        maze = new MyMaze();
+        maze.loadTileMaze();
     }
 
     @Override
@@ -41,11 +42,10 @@ public class Handler extends SimpleChannelInboundHandler<String> {
             users.put(ctx, user);
             isFirst = false;
 
-            String res = "";
+            String res = "USERS";
             for (ChannelHandlerContext us: users.keySet()) {
-                res +="," + users.get(us).genToString();
+                res += "," + users.get(us).genToString();
             }
-            res = res.substring(1);
 
                 for (ChannelHandlerContext us: users.keySet()) {
                     String finalRes = res;
@@ -56,13 +56,11 @@ public class Handler extends SimpleChannelInboundHandler<String> {
 
         }
         if(inp.equals("EXIT")){
-            System.out.println("Exiting...\n");
-            try {
-                this.channelUnregistered(ctx);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            System.out.println(user.name + "Exiting...\n");
+            users.remove(ctx);
+            ctx.close();
         }
+
         String[] point = inp.split(",");
         if(point[0].equals("POINT")){
             user.point.x = Integer.parseInt(point[1]);

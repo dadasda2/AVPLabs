@@ -30,7 +30,7 @@ public class Server {
                         new StringDecoder(StandardCharsets.UTF_8),
                         new StringEncoder(StandardCharsets.UTF_8),
                         new LoggingHandler(LogLevel.INFO),
-                        new Handler(users)
+                        new Handler()
                 );
             }
         }).bind(3000);

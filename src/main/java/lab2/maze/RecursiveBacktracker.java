@@ -25,7 +25,7 @@ public class RecursiveBacktracker extends Maze implements Serializable {
      */
     public RecursiveBacktracker(int width, int height) {
         super(width, height);
-        rnd = new Random();
+        rnd = new Random(112233);
         start = new Node(rnd.nextInt(width), rnd.nextInt(height));
     }
 

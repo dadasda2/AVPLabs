@@ -1,4 +1,4 @@
-package lab2.maze;
+package lab2;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -9,11 +9,11 @@ import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
-
+import  lab2.maze.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class MazeExample extends JPanel {
+public class MyMaze extends JPanel {
     private static final long serialVersionUID = -5594533691085748251L;
 
     /** Maze width. */
@@ -26,7 +26,7 @@ public class MazeExample extends JPanel {
     private Dimension dimension;
     private List<Shape> shapes;
 
-    public MazeExample() {
+    public MyMaze() {
         dimension = new Dimension();
         shapes = new ArrayList<Shape>();
     }
@@ -104,7 +104,7 @@ public class MazeExample extends JPanel {
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                MazeExample panel = new MazeExample();
+                MyMaze panel = new MyMaze();
 //                panel.loadMaze();
                 panel.loadTileMaze();
                 JFrame window = new JFrame("Maze Example");
