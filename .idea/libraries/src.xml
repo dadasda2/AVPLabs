@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="src">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$APPLICATION_HOME_DIR$/externalLibs/json_simple-1.1-all/src" />
+      <root url="file://$APPLICATION_HOME_DIR$/externalLibs/json_simple-1.1-all/test" />
+    </SOURCES>
+  </library>
+</component>
