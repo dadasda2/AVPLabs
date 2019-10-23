@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="src1">
-    <CLASSES />
-    <JAVADOC />
-    <SOURCES>
-      <root url="file://$APPLICATION_HOME_DIR$/externalLibs/java-netty-websocket-json-server-client-master/src" />
-    </SOURCES>
-  </library>
-</component>

@@ -11,14 +11,11 @@ public class Handler extends SimpleChannelInboundHandler<String> {
     private User user;
     private boolean isFirst;
     private static ConcurrentHashMap<ChannelHandlerContext, User> users = new ConcurrentHashMap<>();
-    private MyMaze maze;
 
 
     public Handler() {
         user = new User();
         isFirst = true;
-        maze = new MyMaze();
-        maze.loadTileMaze();
     }
 
     @Override
@@ -42,17 +39,7 @@ public class Handler extends SimpleChannelInboundHandler<String> {
             users.put(ctx, user);
             isFirst = false;
 
-            String res = "USERS";
-            for (ChannelHandlerContext us: users.keySet()) {
-                res += "," + users.get(us).genToString();
-            }
-
-                for (ChannelHandlerContext us: users.keySet()) {
-                    String finalRes = res;
-                    us.executor().submit(()->{
-                        us.writeAndFlush(finalRes + "\n");
-                    });
-            }
+            SendUsers();
 
         }
         if(inp.equals("EXIT")){
@@ -71,9 +58,25 @@ public class Handler extends SimpleChannelInboundHandler<String> {
         if(point[0].equals("POINT")){
             user.point.x = Integer.parseInt(point[1]);
             user.point.y = Integer.parseInt(point[2]);
-            System.out.println("User point " + user.point);
-            ctx.writeAndFlush("\n");
+            users.put(ctx, user);
+            SendUsers();
+
         }
 
+
+    }
+
+    private void SendUsers() {
+        StringBuilder res = new StringBuilder("USERS");
+        for (ChannelHandlerContext us: users.keySet()) {
+            res.append(",").append(users.get(us).genToString());
+        }
+
+        for (ChannelHandlerContext us: users.keySet()) {
+            String finalRes = res.toString();
+            us.executor().submit(()->{
+                us.writeAndFlush(finalRes + "\n");
+            });
+        }
     }
 }
