@@ -34,9 +34,9 @@ public class Handler extends SimpleChannelInboundHandler<String> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String inp) {
+        System.out.println("inp " + inp);
         if (isFirst) {
             Random rnd = new Random();
-            System.out.println("inp " + inp);
             user.name = inp;
             user.color = new Color(rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255));
             users.put(ctx, user);
@@ -57,6 +57,12 @@ public class Handler extends SimpleChannelInboundHandler<String> {
         }
         if(inp.equals("EXIT")){
             System.out.println(user.name + "Exiting...\n");
+            for (ChannelHandlerContext us: users.keySet()) {
+                System.out.println(us);
+                us.executor().submit(()->{
+                   us.writeAndFlush("DISC," + users.get(ctx).name +"\n");
+                });
+            }
             users.remove(ctx);
             ctx.close();
         }
@@ -65,6 +71,8 @@ public class Handler extends SimpleChannelInboundHandler<String> {
         if(point[0].equals("POINT")){
             user.point.x = Integer.parseInt(point[1]);
             user.point.y = Integer.parseInt(point[2]);
+            System.out.println("User point " + user.point);
+            ctx.writeAndFlush("\n");
         }
 
     }
