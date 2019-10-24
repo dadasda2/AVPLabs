@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.event.KeyListener;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,9 @@ import  lab2.maze.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class MyMaze extends JPanel {
+public class MyMaze extends JPanel{
     private static final long serialVersionUID = -5594533691085748251L;
-    private static ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
 
     /** Maze width. */
     private static final int WIDTH = 30;
@@ -30,9 +31,12 @@ public class MyMaze extends JPanel {
     private Dimension dimension;
     private List<Shape> shapes;
 
-    public MyMaze(ConcurrentHashMap<String, User> u) {
+    public MyMaze() {
         dimension = new Dimension();
         shapes = new ArrayList<Shape>();
+    }
+
+    public void setUsers(ConcurrentHashMap<String, User> u){
         users = u;
     }
 
@@ -48,11 +52,9 @@ public class MyMaze extends JPanel {
         for (String us: users.keySet()) {
             int x = (int) users.get(us).point.getX();
             int y = (int) users.get(us).point.getY();
-            System.out.println("x " + x);
-            System.out.println("y " + y);
 
             g2d.drawRect(x,y,10, 10);
-        }
+            }
 //        for (Shape s : shapes) {
 //            g2d.draw(s);
 //            g2d.fill(s);
