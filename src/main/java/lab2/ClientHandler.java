@@ -5,6 +5,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ClientHandler extends SimpleChannelInboundHandler<String> {
