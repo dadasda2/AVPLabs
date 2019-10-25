@@ -15,7 +15,7 @@ public class User extends Object{
   }
 
   public User(){
-       point = new Point(1,1); // TODO: 17.10.2019  задать дефолтное начало лабиринта
+       point = new Point(30,30); // TODO: 17.10.2019  задать дефолтное начало лабиринта
        name = "ss";
        color =  new Color(255, 160, 0);
     }
