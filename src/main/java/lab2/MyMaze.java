@@ -1,11 +1,6 @@
 package lab2;
 
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
@@ -17,15 +12,21 @@ import  lab2.maze.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class MyMaze extends JPanel{
+public class MyMaze extends JPanel {
     private static final long serialVersionUID = -5594533691085748251L;
     private ConcurrentHashMap<String, User> users = new ConcurrentHashMap<>();
-
-    /** Maze width. */
+    public TileMaze tileMaze;
+    /**
+     * Maze width.
+     */
     private static final int WIDTH = 30;
-    /** Maze height. */
+    /**
+     * Maze height.
+     */
     private static final int HEIGHT = 30;
-    /** Maze path width. */
+    /**
+     * Maze path width.
+     */
     private static final int N = 10;
 
     private Dimension dimension;
@@ -36,7 +37,7 @@ public class MyMaze extends JPanel{
         shapes = new ArrayList<Shape>();
     }
 
-    public void setUsers(ConcurrentHashMap<String, User> u){
+    public void setUsers(ConcurrentHashMap<String, User> u) {
         users = u;
     }
 
@@ -49,60 +50,24 @@ public class MyMaze extends JPanel{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        for (String us: users.keySet()) {
-            int x = (int) users.get(us).point.getX();
-            int y = (int) users.get(us).point.getY();
-
-            g2d.drawRect(x,y,10, 10);
-            }
 //        for (Shape s : shapes) {
 //            g2d.draw(s);
 //            g2d.fill(s);
 //        }
-    }
+        for (String us : users.keySet()) {
+            g2d.setColor(users.get(us).color);
+            int x = (int) users.get(us).point.getX();
+            int y = (int) users.get(us).point.getY();
 
-    public void loadMaze() {
-        shapes.clear();
-        Maze maze = new RecursiveBacktracker(WIDTH, HEIGHT);
-        maze.generate();
-        for (int x = 0; x < maze.getWidth(); ++x) {
-            if (maze.isWall(x, 0, Direction.NORTH)) {
-                int x1 = x * N;
-                int x2 = x1 + N;
-                shapes.add(new Line2D.Float(x1, 0, x2, 0));
-            }
+
+//            g2d.drawRect(x, y, 10, 10);
+            g2d.fillRect(x,y,15,15);
         }
-        for (int y = 0; y < maze.getHeight(); ++y) {
-            if (maze.isWall(0, y, Direction.WEST)) {
-                int y1 = y * N;
-                int y2 = y1 + N;
-                shapes.add(new Line2D.Float(0, y1, 0, y2));
-            }
-        }
-        for (int y = 0; y < maze.getHeight(); ++y) {
-            for (int x = 0; x < maze.getWidth(); ++x) {
-                if (maze.isWall(x, y, Direction.SOUTH)) {
-                    int x1 = x * N;
-                    int x2 = x1 + N;
-                    int y1 = (y + 1) * N;
-                    shapes.add(new Line2D.Float(x1, y1, x2, y1));
-                }
-                if (maze.isWall(x, y, Direction.EAST)) {
-                    int x1 = (x + 1) * N;
-                    int y1 = y * N;
-                    int y2 = y1 + N;
-                    shapes.add(new Line2D.Float(x1, y1, x1, y2));
-                }
-            }
-        }
-        int panelWidth = maze.getWidth() * N + 1;
-        int panelHeight = maze.getHeight() * N + 1;
-        dimension.setSize(panelWidth, panelHeight);
     }
 
     public void loadTileMaze() {
         shapes.clear();
-        TileMaze tileMaze = new TileMaze(new RecursiveBacktracker(WIDTH, HEIGHT));
+        tileMaze = new TileMaze(new RecursiveBacktracker(WIDTH, HEIGHT));
         tileMaze.generate();
         for (int y = 0; y < tileMaze.getHeight(); ++y) {
             for (int x = 0; x < tileMaze.getWidth(); ++x) {
@@ -117,19 +82,4 @@ public class MyMaze extends JPanel{
     }
 
 
-//    public static void main(String[] args) {
-//        EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                MyMaze panel = new MyMaze();
-////                panel.loadMaze();
-//                panel.loadTileMaze();
-//                JFrame window = new JFrame("Maze Example");
-//                window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                window.add(panel);
-//                window.pack();
-//                window.setLocationRelativeTo(null);
-//                window.setVisible(true);
-//            }
-//        });
-//    }
 }

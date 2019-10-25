@@ -38,7 +38,7 @@ public class Handler extends SimpleChannelInboundHandler<String> {
             user.color = new Color(rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255));
             users.put(ctx, user);
             isFirst = false;
-
+            ctx.writeAndFlush("FIRST," + user.name + "\n");
             SendUsers();
 
         }

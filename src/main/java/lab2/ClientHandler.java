@@ -12,16 +12,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @ChannelHandler.Sharable
 public class ClientHandler extends SimpleChannelInboundHandler<String> {
     private static ConcurrentHashMap<String, User> users;
-    private MyMaze maze;
-    private ChannelHandlerContext cont;
-    private boolean isFirst;
+    public String name;
+
+    public ChannelHandlerContext cont;
 
     public ClientHandler() {
         users = new ConcurrentHashMap<>();
-    }
-
-    public void setMaze(MyMaze m){
-        maze = m;
     }
 
     public ConcurrentHashMap<String, User> getUsers(){
@@ -53,20 +49,10 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
     protected void channelRead0(ChannelHandlerContext arg0, String msg) throws Exception {
         String[] str = msg.split(",");
         System.out.println("msg " + msg);
-//        if (isFirst) {
-        if (str[0].equals("USERS")) {
-            for (int i = 0; i < str.length - 1; i += 6) {
-                Point p = new Point();
-                p.setLocation(Double.parseDouble(str[1 + i]),
-                        Double.parseDouble(str[2 + i]));
-                User u = new User(p, str[3 + i]
-                        , new Color(Integer.parseInt(str[4 + i]),
-                        Integer.parseInt(str[5 + i]),
-                        Integer.parseInt(str[6 + i])));
-                Random rnd = new Random();
-//                System.out.println(u.toString());
-                users.put(u.name, u);
+            if(str[0].equals("FIRST")) {
+                name = str[1];
             }
+
             if (str[0].equals("USERS")) {
                 for (int i = 0; i < str.length - 1; i += 6) {
                     Point p = new Point();
@@ -87,7 +73,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
                 System.out.println(str[1] + " deleted");
             }
         }
-    }
+
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {

@@ -3,6 +3,7 @@ package lab2;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -119,9 +120,8 @@ import java.util.concurrent.*;
 
 
 public class Client {
-    private ClientHandler clientHandler = new ClientHandler();
+    private ClientHandler clientHandler;
     private MyMaze maze = new MyMaze();
-    private Listener listener = new Listener();
 
     public static void main(String[] args) {
         String[] heroes = {"Adam", "Eve", "Steve", "Nikolai"};
@@ -137,6 +137,7 @@ public class Client {
 }
 
         public void clientRun (final String name){
+            clientHandler = new ClientHandler();
             ExecutorService executor = new NioEventLoopGroup();
             executor = Executors.newFixedThreadPool(10);
             ExecutorService finalExecutor = executor;
@@ -163,6 +164,7 @@ public class Client {
                     f = bootstrap.connect("localhost", 3000).sync();
                     Thread.sleep(1000);
                     clientHandler.sendMessage(name);
+
                         f.channel().closeFuture().sync();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -181,7 +183,33 @@ public class Client {
 
                     @Override
                     public void keyPressed(KeyEvent keyEvent) {
-                        keyEvent.
+                        User user = clientHandler.getUsers().get(clientHandler.name);
+                        int userX = user.point.x;
+                        int userY = user.point.y;
+                        if (keyEvent.getExtendedKeyCode() == 37) {
+//                            if (!maze.tileMaze.isWall(userX - 1, userY)){
+                                userX--;
+                                clientHandler.sendMessage("POINT," + userX + "," + userY + "\n");
+//                            }
+                        }
+                        if (keyEvent.getExtendedKeyCode() == 38) {
+//                            if (!maze.tileMaze.isWall(userX, userY - 1)) {
+                                userY--;
+                                clientHandler.sendMessage("POINT," + userX + "," + userY + "\n");
+//                            }
+                        }
+                        if(keyEvent.getExtendedKeyCode() == 39) {
+//                            if (!maze.tileMaze.isWall(userX + 1, userY)) {
+                                userX++;
+                                clientHandler.sendMessage("POINT," + userX + "," + userY + "\n");
+//                            }
+                        }
+                            if (keyEvent.getExtendedKeyCode() == 40) {
+//                                if (!maze.tileMaze.isWall(userX, userY + 1)) {
+                                    userY++;
+                                    clientHandler.sendMessage("POINT," + userX + "," + userY + "\n");
+//                                }
+                            }
                         }
 
                     @Override
@@ -192,7 +220,7 @@ public class Client {
                 window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 window.setLayout(new BorderLayout());
                 window.add(maze, BorderLayout.CENTER);
-                window.setSize(400, 400);
+                window.pack();
                 window.setLocationRelativeTo(null);
                 window.setVisible(true);
 
