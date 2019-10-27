@@ -187,28 +187,28 @@ public class Client {
                         int userX = user.point.x;
                         int userY = user.point.y;
                         if (keyEvent.getExtendedKeyCode() == 37) {
-//                            if (!maze.tileMaze.isWall(userX - 1, userY)){
+                            if (!maze.tileMaze.isWall(userX - 1, userY)){
                                 userX--;
                                 clientHandler.sendMessage("POINT," + userX + "," + userY + "\n");
-//                            }
+                            }
                         }
                         if (keyEvent.getExtendedKeyCode() == 38) {
-//                            if (!maze.tileMaze.isWall(userX, userY - 1)) {
+                            if (!maze.tileMaze.isWall(userX, userY - 1)) {
                                 userY--;
                                 clientHandler.sendMessage("POINT," + userX + "," + userY + "\n");
-//                            }
+                            }
                         }
                         if(keyEvent.getExtendedKeyCode() == 39) {
-//                            if (!maze.tileMaze.isWall(userX + 1, userY)) {
+                            if (!maze.tileMaze.isWall(userX + 1, userY)) {
                                 userX++;
                                 clientHandler.sendMessage("POINT," + userX + "," + userY + "\n");
-//                            }
+                            }
                         }
                             if (keyEvent.getExtendedKeyCode() == 40) {
-//                                if (!maze.tileMaze.isWall(userX, userY + 1)) {
+                                if (!maze.tileMaze.isWall(userX, userY + 1)) {
                                     userY++;
                                     clientHandler.sendMessage("POINT," + userX + "," + userY + "\n");
-//                                }
+                                }
                             }
                         }
 

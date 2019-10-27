@@ -50,10 +50,10 @@ public class MyMaze extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-//        for (Shape s : shapes) {
-//            g2d.draw(s);
-//            g2d.fill(s);
-//        }
+        for (Shape s : shapes) {
+            g2d.draw(s);
+            g2d.fill(s);
+        }
         for (String us : users.keySet()) {
             g2d.setColor(users.get(us).color);
             int x = (int) users.get(us).point.getX();
@@ -61,7 +61,7 @@ public class MyMaze extends JPanel {
 
 
 //            g2d.drawRect(x, y, 10, 10);
-            g2d.fillRect(x,y,15,15);
+            g2d.fillRect(x * 10,y * 10,10,10);
         }
     }
 
