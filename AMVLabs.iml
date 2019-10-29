@@ -7,13 +7,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/src/main/java/Lab2_2" />
-      <excludeFolder url="file://$MODULE_DIR$/src/main/java/lab2/externserv" />
-      <excludeFolder url="file://$MODULE_DIR$/src/main/java/lab2/lec7" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.41.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.41.Final" level="project" />
   </component>
 </module>

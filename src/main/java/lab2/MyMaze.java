@@ -19,15 +19,15 @@ public class MyMaze extends JPanel {
     /**
      * Maze width.
      */
-    private static final int WIDTH = 30;
+    private static final int WIDTH = 10;
     /**
      * Maze height.
      */
-    private static final int HEIGHT = 30;
+    private static final int HEIGHT = 10;
     /**
      * Maze path width.
      */
-    private static final int N = 10;
+    private static final int N = 30;
 
     private Dimension dimension;
     private List<Shape> shapes;
@@ -61,7 +61,7 @@ public class MyMaze extends JPanel {
 
 
 //            g2d.drawRect(x, y, 10, 10);
-            g2d.fillRect(x * 10,y * 10,10,10);
+            g2d.fillRect(x * N,y * N,N,N);
         }
     }
 
